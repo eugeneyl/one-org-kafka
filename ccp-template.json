@@ -1,0 +1,71 @@
+{
+    "name": "first-network-org${ORG}",
+    "version": "1.0.0",
+    "client": {
+        "organization": "Org${ORG}",
+        "connection": {
+            "timeout": {
+                "peer": {
+                    "endorser": "300"
+                }
+            }
+        }
+    },
+    "organizations": {
+        "Org${ORG}": {
+            "mspid": "Org${ORG}MSP",
+            "peers": [
+                "peer0.org${ORG}.frogfrogjump.com",
+                "peer1.org${ORG}.frogfrogjump.com",
+                "peer2.org${ORG}.frogfrogjump.com"
+            ],
+            "certificateAuthorities": [
+                "ca.org${ORG}.frogfrogjump.com"
+            ]
+        }
+    },
+    "peers": {
+        "peer0.org${ORG}.frogfrogjump.com": {
+            "url": "grpcs://${NODE1}:${P0PORT}",
+            "tlsCACerts": {
+                "pem": "${PEERPEM}"
+            },
+            "grpcOptions": {
+                "ssl-target-name-override": "peer0.org${ORG}.frogfrogjump.com",
+                "hostnameOverride": "peer0.org${ORG}.frogfrogjump.com"
+            }
+        },
+        "peer1.org${ORG}.frogfrogjump.com": {
+            "url": "grpcs://${NODE1}:${P0PORT}",
+            "tlsCACerts": {
+                "pem": "${PEERPEM}"
+            },
+            "grpcOptions": {
+                "ssl-target-name-override": "peer1.org${ORG}.frogfrogjump.com",
+                "hostnameOverride": "peer1.org${ORG}.frogfrogjump.com"
+            }
+        },
+        "peer2.org${ORG}.frogfrogjump.com": {
+            "url": "grpcs://${NODE2}:${P0PORT}",
+            "tlsCACerts": {
+                "pem": "${PEERPEM}"
+            },
+            "grpcOptions": {
+                "ssl-target-name-override": "peer2.org${ORG}.frogfrogjump.com",
+                "hostnameOverride": "peer2.org${ORG}.frogfrogjump.com"
+            }
+        }
+    },
+    "certificateAuthorities": {
+        "ca.org${ORG}.frogfrogjump.com": {
+            "url": "https://${NODE1}:${CAPORT}",
+            "caName": "ca.org${ORG}.frogfrogjump.com",
+            "tlsCACerts": {
+                "pem": "${CAPEM}"
+            },
+            "httpOptions": {
+                "verify": false
+            }
+        }
+    }
+}

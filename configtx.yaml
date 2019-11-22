@@ -1,57 +1,60 @@
 ---
 Organizations:
     - &OrdererOrg
-        Name: OrdererOrg
-        ID: OrdererMSP
-        MSPDir: crypto-config/ordererOrganizations/example.com/msp
-        Policies:
-            Readers:
-                Type: Signature
-                Rule: "OR('OrdererMSP.member')"
-            Writers:
-                Type: Signature
-                Rule: "OR('OrdererMSP.member')"
-            Admins:
-                Type: Signature
-                Rule: "OR('OrdererMSP.admin')"
+      Name: OrdererOrg
+      ID: OrdererMSP
+      MSPDir: crypto-config/ordererOrganizations/frogfrogjump.com/msp
+      Policies:
+          Readers:
+              Type: Signature
+              Rule: "OR('OrdererMSP.member')"
+          Writers:
+              Type: Signature
+              Rule: "OR('OrdererMSP.member')"
+          Admins:
+              Type: Signature
+              Rule: "OR('OrdererMSP.admin')"
 
     - &Org1
-        Name: Org1MSP
-        ID: Org1MSP
-        MSPDir: crypto-config/peerOrganizations/org1.example.com/msp
-        Policies:
-            Readers:
-                Type: Signature
-                Rule: "OR('Org1MSP.admin', 'Org1MSP.peer', 'Org1MSP.client')"
-            Writers:
-                Type: Signature
-                Rule: "OR('Org1MSP.admin', 'Org1MSP.client')"
-            Admins:
-                Type: Signature
-                Rule: "OR('Org1MSP.admin')"
+      Name: Org1MSP
+      ID: Org1MSP
+      MSPDir: crypto-config/peerOrganizations/org1.frogfrogjump.com/msp
+      Policies:
+          Readers:
+              Type: Signature
+              Rule: "OR('Org1MSP.admin', 'Org1MSP.peer', 'Org1MSP.client')"
+          Writers:
+              Type: Signature
+              Rule: "OR('Org1MSP.admin', 'Org1MSP.client')"
+          Admins:
+              Type: Signature
+              Rule: "OR('Org1MSP.admin')"
 
-    - &Org2
-        Name: Org2MSP
-        ID: Org2MSP
-        MSPDir: crypto-config/peerOrganizations/org2.example.com/msp
-        Policies:
-            Readers:
-                Type: Signature
-                Rule: "OR('Org2MSP.admin', 'Org2MSP.peer', 'Org2MSP.client')"
-            Writers:
-                Type: Signature
-                Rule: "OR('Org2MSP.admin', 'Org2MSP.client')"
-            Admins:
-                Type: Signature
-                Rule: "OR('Org2MSP.admin')"
+    # - &Org2
+    #     Name: Org2MSP
+    #     ID: Org2MSP
+    #     MSPDir: crypto-config/peerOrganizations/org2.frogfrogjump.com/msp
+    #     Policies:
+    #         Readers:
+    #             Type: Signature
+    #             Rule: "OR('Org2MSP.admin', 'Org2MSP.peer', 'Org2MSP.client')"
+    #         Writers:
+    #             Type: Signature
+    #             Rule: "OR('Org2MSP.admin', 'Org2MSP.client')"
+    #         Admins:
+    #             Type: Signature
+    #             Rule: "OR('Org2MSP.admin')"
 
 Capabilities:
     Channel: &ChannelCapabilities
-        V1_3: true
+        V1_4_3: true
+        V1_3: false
     Orderer: &OrdererCapabilities
-        V1_1: true
+        V1_4_2: true
+        V1_1: false
     Application: &ApplicationCapabilities
-        V1_3: true
+        V1_4_2: true
+        V1_3: false
         V1_2: false
         V1_1: false
 
@@ -74,10 +77,8 @@ Application: &ApplicationDefaults
 Orderer: &OrdererDefaults
     OrdererType: kafka
     Addresses:
-        - orderer0.example.com:7050
-        - orderer1.example.com:7050
-        - orderer2.example.com:7050
-    BatchTimeout: 2s
+        - orderer0.frogfrogjump.com:7050
+    BatchTimeout: 30s
     BatchSize:
         MaxMessageCount: 10
         AbsoluteMaxBytes: 99 MB
@@ -85,9 +86,9 @@ Orderer: &OrdererDefaults
     Kafka:
         Brokers:
             - kafka0:9092
-            - kafka1:9092
-            - kafka2:9092
-            - kafka3:9092
+            - kafka1:9192
+            # - kafka2:9292
+            # - kafka3:9392
     Organizations:
     Policies:
         Readers:
@@ -118,26 +119,38 @@ Channel: &ChannelDefaults
         <<: *ChannelCapabilities
 
 Profiles:
-
-    TwoOrgsOrdererGenesis:
+    OneOrgsOrdererGenesis:
         <<: *ChannelDefaults
+        Capabilities:
+            <<: *ChannelCapabilities
         Orderer:
             <<: *OrdererDefaults
+            OrdererType: kafka
+            Kafka:
+                Brokers:
+                    - kafka0:9092
+                    - kafka1:9192
+                    # - kafka2:9292
+                    # - kafka3:9392
             Organizations:
                 - *OrdererOrg
             Capabilities:
                 <<: *OrdererCapabilities
+        Application:
+            <<: *ApplicationDefaults
+            Organizations:
+                - *OrdererOrg
         Consortiums:
             SampleConsortium:
                 Organizations:
                     - *Org1
-                    - *Org2
-    TwoOrgsChannel:
+
+    OneOrgsChannel:
         Consortium: SampleConsortium
+        <<: *ChannelDefaults
         Application:
             <<: *ApplicationDefaults
             Organizations:
                 - *Org1
-                - *Org2
             Capabilities:
                 <<: *ApplicationCapabilities
