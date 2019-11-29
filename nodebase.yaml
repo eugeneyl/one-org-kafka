@@ -32,13 +32,13 @@ services:
             - CONFIGTX_ORDERER_ORDERERTYPE=kafka
             - CONFIGTX_ORDERER_BATCHSIZE_MAXMESSAGECOUNT=10
             - CONFIGTX_ORDERER_BATCHTIMEOUT=30s
-            - CONFIGTX_ORDERER_ADDRESSES=[127.0.0.1:7050]
+            - CONFIGTX_ORDERER_ADDRESSES=[167.99.83.108:7050]
             # TLS settings
-            - ORDERER_GENERAL_TLS_ENABLED=false
+            - ORDERER_GENERAL_TLS_ENABLED=true
             - ORDERER_GENERAL_TLS_PRIVATEKEY=/var/hyperledger/tls/server.key
             - ORDERER_GENERAL_TLS_CERTIFICATE=/var/hyperledger/tls/server.crt
             - ORDERER_GENERAL_TLS_ROOTCAS=[/var/hyperledger/tls/ca.crt]
-            - ORDERER_TLS_CLIENTAUTHREQUIRED=false
+            - ORDERER_TLS_CLIENTAUTHREQUIRED=true
             - ORDERER_TLS_CLIENTROOTCAS_FILES=/var/hyperledger/users/Admin@frogfrogjump.com/tls/ca.crt
             - ORDERER_TLS_CLIENTCERT_FILE=/var/hyperledger/users/Admin@frogfrogjump.com/tls/client.crt
             - ORDERER_TLS_CLIENTKEY_FILE=/var/hyperledger/users/Admin@frogfrogjump.com/tls/client.key
@@ -60,7 +60,7 @@ services:
           - CORE_VM_DOCKER_HOSTCONFIG_NETWORKMODE=${COMPOSE_PROJECT_NAME}_fabric
           - FABRIC_LOGGING_SPEC=INFO
           #- FABRIC_LOGGING_SPEC=DEBUG
-          - CORE_PEER_TLS_ENABLED=false
+          - CORE_PEER_TLS_ENABLED=true
           - CORE_PEER_GOSSIP_USELEADERELECTION=true
           - CORE_PEER_GOSSIP_ORGLEADER=false
           - CORE_PEER_PROFILE_ENABLED=true

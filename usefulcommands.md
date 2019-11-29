@@ -35,6 +35,8 @@ docker-compose -f node2.yaml up -d
 docker-compose -f node3.yaml up -d
 docker exec cli peer channel create -o orderer0.frogfrogjump.com:7050 -c mychannel -f ./channel-artifacts/channel.tx
 
+docker exec cli peer channel create -o orderer0.frogfrogjump.com:7050 -c mychannel -f ./channel-artifacts/channel.tx --tls true --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/frogfrogjump.com/orderers/orderer0.frogfrogjump.com/msp/tlscacerts/tlsca.frogfrogjump.com-cert.pem
+
 docker exec cli peer channel join -b mychannel.block
 
 docker cp cli:/opt/gopath/src/github.com/hyperledger/fabric/peer/mychannel.block .
@@ -45,18 +47,21 @@ docker exec cli peer channel join -b mychannel.block
 
 docker exec cli peer chaincode install -n orders -v 1.0 -p github.com/chaincode/
 
-docker exec cli peer chaincode instantiate -o orderer0.frogfrogjump.com:7050 -C mychannel -n orders -v 1.0 -c '{"Args":[]}'
+docker exec cli peer chaincode instantiate -o orderer0.frogfrogjump.com:7050 -C mychannel -n orders -v 1.0 -c '{"Args":[]}' --tls true --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/frogfrogjump.com/orderers/orderer0.frogfrogjump.com/msp/tlscacerts/tlsca.frogfrogjump.com-cert.pem
 
-docker exec cli peer chaincode invoke -o orderer0.frogfrogjump.com:7050 -C mychannel -n orders -c '{"Args":["initLedger"]}'
+docker exec cli peer chaincode invoke -o orderer0.frogfrogjump.com:7050 -C mychannel -n orders -c '{"Args":["initLedger"]}' --tls true --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/frogfrogjump.com/orderers/orderer0.frogfrogjump.com/msp/tlscacerts/tlsca.frogfrogjump.com-cert.pem
 
-docker exec cli peer chaincode invoke -o orderer0.frogfrogjump.com:7050 -C mychannel -n orders -c '{"Args":["queryAllOrders"]}'
 
-docker exec cli peer chaincode invoke -o orderer0.frogfrogjump.com:7050 -C mychannel -n orders -c '{"Args":["createOrder","ORDER14", "23459348", "5493058", "Pending"]}'
+docker exec cli peer chaincode query -C mychannel -n orders -c '{"Args":["queryAllOrders"]}' 
 
-docker exec cli peer chaincode invoke -o orderer0.frogfrogjump.com:7050 -C mychannel -n orders -c '{"Args":["createOrder","ORDER15", "23459348", "5493058", "Pending"]}'
+docker exec cli peer chaincode invoke -o orderer0.frogfrogjump.com:7050 -C mychannel -n orders -c '{"Args":["createOrder","ORDER14", "23459348", "5493058", "Pending"]}' --tls true --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/frogfrogjump.com/orderers/orderer0.frogfrogjump.com/msp/tlscacerts/tlsca.frogfrogjump.com-cert.pem
 
-docker exec cli peer chaincode invoke -o orderer0.frogfrogjump.com:7050 -C mychannel -n orders -c '{"Args":["createOrder","ORDER16", "23459348", "5493058", "Pending"]}'
+docker exec cli peer chaincode invoke -o orderer0.frogfrogjump.com:7050 -C mychannel -n orders -c '{"Args":["createOrder","ORDER15", "23459348", "5493058", "Pending"]}' --tls true --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/frogfrogjump.com/orderers/orderer0.frogfrogjump.com/msp/tlscacerts/tlsca.frogfrogjump.com-cert.pem
 
-docker exec cli peer chaincode invoke -o orderer0.frogfrogjump.com:7050 -C mychannel -n orders -c '{"Args":["queryAllOrders"]}'
+docker exec cli peer chaincode invoke -o orderer0.frogfrogjump.com:7050 -C mychannel -n orders -c '{"Args":["createOrder","ORDER16", "23459348", "5493058", "Pending"]}' --tls true --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/frogfrogjump.com/orderers/orderer0.frogfrogjump.com/msp/tlscacerts/tlsca.frogfrogjump.com-cert.pem
+
+docker exec cli peer chaincode query -C mychannel -n orders -c '{"Args":["queryOrder", "ORDER2]}' 
 
 docker rm -f $(docker ps -aq) && docker rmi -f $(docker images | grep dev | awk '{print $3}') && docker volume prune
+
+curl -d '{"orderno":"ORDER12","orderid":"1111111","customerid":"2222222","status":"pending"}' -H "Content-Type: application/json" -X POST http://peer3.frogfrogjump:5000/api/addorder
