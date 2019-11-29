@@ -23,6 +23,13 @@ su - frog
 
 curl -sSL http://bit.ly/2ysbOFE | bash -s
 
+docker swarm init --advertise-addr {ip address of master node}
+
+docker swarm join --token SWMTKN-1-58xwguh8oa3jj6rcbcm4cyxg9lmitxyv1fs1sn1d5xy51e9arv-1hts5vhxebpjf6fz3kjskpbub 167.71.121.213:2377
+
+docker network create --attachable --driver overlay fabric
+docker run -itd --name mybusybox --network fabric busybox
+
 tar -czvf one-org-kafka.tar.gz one-org-kafka
 tar -xzvf one-org-kafka.tar.gz one-org-kafka
 

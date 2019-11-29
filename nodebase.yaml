@@ -19,7 +19,7 @@ services:
     orderer:
         image: hyperledger/fabric-orderer
         environment:
-            - CORE_VM_DOCKER_HOSTCONFIG_NETWORKMODE=${COMPOSE_PROJECT_NAME}_fabric
+            - CORE_VM_DOCKER_HOSTCONFIG_NETWORKMODE=fabric
             - ORDERER_HOME=/var/hyperledger/orderer
             - ORDERER_GENERAL_LOGLEVEL=debug
             - ORDERER_GENERAL_LOCALMSPDIR=/var/hyperledger/msp
@@ -32,7 +32,7 @@ services:
             - CONFIGTX_ORDERER_ORDERERTYPE=kafka
             - CONFIGTX_ORDERER_BATCHSIZE_MAXMESSAGECOUNT=10
             - CONFIGTX_ORDERER_BATCHTIMEOUT=30s
-            - CONFIGTX_ORDERER_ADDRESSES=[167.99.83.108:7050]
+            - CONFIGTX_ORDERER_ADDRESSES=[167.71.121.213:7050]
             # TLS settings
             - ORDERER_GENERAL_TLS_ENABLED=true
             - ORDERER_GENERAL_TLS_PRIVATEKEY=/var/hyperledger/tls/server.key
@@ -57,7 +57,7 @@ services:
           # the following setting starts chaincode containers on the same
           # bridge network as the peers
           # https://docs.docker.com/compose/networking/
-          - CORE_VM_DOCKER_HOSTCONFIG_NETWORKMODE=${COMPOSE_PROJECT_NAME}_fabric
+          - CORE_VM_DOCKER_HOSTCONFIG_NETWORKMODE=fabric
           - FABRIC_LOGGING_SPEC=INFO
           #- FABRIC_LOGGING_SPEC=DEBUG
           - CORE_PEER_TLS_ENABLED=true

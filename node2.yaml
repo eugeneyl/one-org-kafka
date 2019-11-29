@@ -6,6 +6,7 @@ volumes:
 
 networks:
     fabric:
+        external: true
 
 services:
     peer1.org1.frogfrogjump.com:
@@ -19,10 +20,6 @@ services:
             - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer1.org1.frogfrogjump.com:7051
             - CORE_PEER_GOSSIP_BOOTSTRAP=peer0.org1.frogfrogjump.com:7051
             - CORE_PEER_LOCALMSPID=Org1MSP
-        extra_hosts:
-            - "orderer0.frogfrogjump.com:${NODE1}"
-            - "peer0.org1.frogfrogjump.com:${NODE1}"
-            - "peer2.org1.frogfrogjump.com:${NODE3}"
         volumes:
             - /var/run/:/host/var/run/
             - ./crypto-config/peerOrganizations/org1.frogfrogjump.com/peers/peer1.org1.frogfrogjump.com/msp:/etc/hyperledger/fabric/msp
@@ -52,10 +49,6 @@ services:
             - CORE_PEER_TLS_KEY_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.frogfrogjump.com/peers/peer1.org1.frogfrogjump.com/tls/server.key
             - CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.frogfrogjump.com/peers/peer1.org1.frogfrogjump.com/tls/ca.crt
             - CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.frogfrogjump.com/users/Admin@org1.frogfrogjump.com/msp
-        extra_hosts:
-            - "orderer0.frogfrogjump.com:${NODE1}"
-            - "peer0.org1.frogfrogjump.com:${NODE1}"
-            - "peer2.org1.frogfrogjump.com:${NODE3}"
         working_dir: /opt/gopath/src/github.com/hyperledger/fabric/peer
         command: /bin/bash
         volumes:
