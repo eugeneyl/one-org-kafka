@@ -151,6 +151,9 @@ services:
             - FABRIC_CA_SERVER_CA_NAME=ca.org1.frogfrogjump.com
             - FABRIC_CA_SERVER_CA_CERTFILE=/etc/hyperledger/fabric-ca-server-config/ca.org1.frogfrogjump.com-cert.pem
             - FABRIC_CA_SERVER_CA_KEYFILE=/etc/hyperledger/fabric-ca-server-config/bdcef22f5ae33ba1d812abb971e8f6e6fcc46fefaa497ab946be1886a2998538_sk
+            - FABRIC_CA_SERVER_TLS_ENABLED=true
+            - FABRIC_CA_SERVER_TLS_CERTFILE=/etc/hyperledger/fabric-ca-server-config/ca.org1.frogfrogjump.com-cert.pem
+            - FABRIC_CA_SERVER_TLS_KEYFILE=/etc/hyperledger/fabric-ca-server-config/dcd40c34f54332917386eff9d9fafef10c85198be358491e49c004a0e227c93a_sk
         ports:
             - "7054:7054"
         command: sh -c 'fabric-ca-server start -b admin:adminpw'
