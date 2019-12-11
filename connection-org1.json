@@ -15,51 +15,51 @@
         "Org1": {
             "mspid": "Org1MSP",
             "peers": [
-                "peer0.org1.frogfrogjump.com",
-                "peer1.org1.frogfrogjump.com",
-                "peer2.org1.frogfrogjump.com"
+                "peer0.org1.example.com",
+                "peer1.org1.example.com",
+                "peer2.org1.example.com"
             ],
             "certificateAuthorities": [
-                "ca.org1.frogfrogjump.com"
+                "ca.org1.example.com"
             ]
         }
     },
     "peers": {
-        "peer0.org1.frogfrogjump.com": {
+        "peer0.org1.example.com": {
             "url": "grpcs://${NODE1}:7051",
             "tlsCACerts": {
                 "pem": "-----BEGIN CERTIFICATE-----\nMIICbTCCAhSgAwIBAgIRAIxlIeFVoMbOcClUuqpZD2kwCgYIKoZIzj0EAwIwgYAx\nCzAJBgNVBAYTAlVTMRMwEQYDVQQIEwpDYWxpZm9ybmlhMRYwFAYDVQQHEw1TYW4g\nRnJhbmNpc2NvMR4wHAYDVQQKExVvcmcxLmZyb2dmcm9nanVtcC5jb20xJDAiBgNV\nBAMTG3Rsc2NhLm9yZzEuZnJvZ2Zyb2dqdW1wLmNvbTAeFw0xOTExMTQwODExMDBa\nFw0yOTExMTEwODExMDBaMIGAMQswCQYDVQQGEwJVUzETMBEGA1UECBMKQ2FsaWZv\ncm5pYTEWMBQGA1UEBxMNU2FuIEZyYW5jaXNjbzEeMBwGA1UEChMVb3JnMS5mcm9n\nZnJvZ2p1bXAuY29tMSQwIgYDVQQDExt0bHNjYS5vcmcxLmZyb2dmcm9nanVtcC5j\nb20wWTATBgcqhkjOPQIBBggqhkjOPQMBBwNCAASoJF5UdEHD6AvNY7c5xeT0xQbN\nH8xTrxSHTTdZ7zAGv/UaFKC3glt1ElaKk8gn3TaEBy2e0gAHjvXvXeEx6yd7o20w\nazAOBgNVHQ8BAf8EBAMCAaYwHQYDVR0lBBYwFAYIKwYBBQUHAwIGCCsGAQUFBwMB\nMA8GA1UdEwEB/wQFMAMBAf8wKQYDVR0OBCIEIF7ki9qHqTi5IF8Y1aGyuptM16tO\n1EJ8lb80as0ichmTMAoGCCqGSM49BAMCA0cAMEQCIC7QzJH1g9a9l+ie8Qs1jr81\n5c+z22CbnoLSEEtpYJEsAiAhSiJGtzJJOz/CM+ldyWLSjV8BYoIc3OBDH74mFd+l\n4g==\n-----END CERTIFICATE-----\n"
             },
             "grpcOptions": {
-                "ssl-target-name-override": "peer0.org1.frogfrogjump.com",
-                "hostnameOverride": "peer0.org1.frogfrogjump.com"
+                "ssl-target-name-override": "peer0.org1.example.com",
+                "hostnameOverride": "peer0.org1.example.com"
             }
         },
-        "peer1.org1.frogfrogjump.com": {
+        "peer1.org1.example.com": {
             "url": "grpcs://${NODE2}:7051",
             "tlsCACerts": {
                 "pem": "-----BEGIN CERTIFICATE-----\nMIICbTCCAhSgAwIBAgIRAIxlIeFVoMbOcClUuqpZD2kwCgYIKoZIzj0EAwIwgYAx\nCzAJBgNVBAYTAlVTMRMwEQYDVQQIEwpDYWxpZm9ybmlhMRYwFAYDVQQHEw1TYW4g\nRnJhbmNpc2NvMR4wHAYDVQQKExVvcmcxLmZyb2dmcm9nanVtcC5jb20xJDAiBgNV\nBAMTG3Rsc2NhLm9yZzEuZnJvZ2Zyb2dqdW1wLmNvbTAeFw0xOTExMTQwODExMDBa\nFw0yOTExMTEwODExMDBaMIGAMQswCQYDVQQGEwJVUzETMBEGA1UECBMKQ2FsaWZv\ncm5pYTEWMBQGA1UEBxMNU2FuIEZyYW5jaXNjbzEeMBwGA1UEChMVb3JnMS5mcm9n\nZnJvZ2p1bXAuY29tMSQwIgYDVQQDExt0bHNjYS5vcmcxLmZyb2dmcm9nanVtcC5j\nb20wWTATBgcqhkjOPQIBBggqhkjOPQMBBwNCAASoJF5UdEHD6AvNY7c5xeT0xQbN\nH8xTrxSHTTdZ7zAGv/UaFKC3glt1ElaKk8gn3TaEBy2e0gAHjvXvXeEx6yd7o20w\nazAOBgNVHQ8BAf8EBAMCAaYwHQYDVR0lBBYwFAYIKwYBBQUHAwIGCCsGAQUFBwMB\nMA8GA1UdEwEB/wQFMAMBAf8wKQYDVR0OBCIEIF7ki9qHqTi5IF8Y1aGyuptM16tO\n1EJ8lb80as0ichmTMAoGCCqGSM49BAMCA0cAMEQCIC7QzJH1g9a9l+ie8Qs1jr81\n5c+z22CbnoLSEEtpYJEsAiAhSiJGtzJJOz/CM+ldyWLSjV8BYoIc3OBDH74mFd+l\n4g==\n-----END CERTIFICATE-----\n"
             },
             "grpcOptions": {
-                "ssl-target-name-override": "peer1.org1.frogfrogjump.com",
-                "hostnameOverride": "peer1.org1.frogfrogjump.com"
+                "ssl-target-name-override": "peer1.org1.example.com",
+                "hostnameOverride": "peer1.org1.example.com"
             }
         },
-        "peer2.org1.frogfrogjump.com": {
+        "peer2.org1.example.com": {
             "url": "grpcs://${NODE3}:7051",
             "tlsCACerts": {
                 "pem": "-----BEGIN CERTIFICATE-----\nMIICbTCCAhSgAwIBAgIRAIxlIeFVoMbOcClUuqpZD2kwCgYIKoZIzj0EAwIwgYAx\nCzAJBgNVBAYTAlVTMRMwEQYDVQQIEwpDYWxpZm9ybmlhMRYwFAYDVQQHEw1TYW4g\nRnJhbmNpc2NvMR4wHAYDVQQKExVvcmcxLmZyb2dmcm9nanVtcC5jb20xJDAiBgNV\nBAMTG3Rsc2NhLm9yZzEuZnJvZ2Zyb2dqdW1wLmNvbTAeFw0xOTExMTQwODExMDBa\nFw0yOTExMTEwODExMDBaMIGAMQswCQYDVQQGEwJVUzETMBEGA1UECBMKQ2FsaWZv\ncm5pYTEWMBQGA1UEBxMNU2FuIEZyYW5jaXNjbzEeMBwGA1UEChMVb3JnMS5mcm9n\nZnJvZ2p1bXAuY29tMSQwIgYDVQQDExt0bHNjYS5vcmcxLmZyb2dmcm9nanVtcC5j\nb20wWTATBgcqhkjOPQIBBggqhkjOPQMBBwNCAASoJF5UdEHD6AvNY7c5xeT0xQbN\nH8xTrxSHTTdZ7zAGv/UaFKC3glt1ElaKk8gn3TaEBy2e0gAHjvXvXeEx6yd7o20w\nazAOBgNVHQ8BAf8EBAMCAaYwHQYDVR0lBBYwFAYIKwYBBQUHAwIGCCsGAQUFBwMB\nMA8GA1UdEwEB/wQFMAMBAf8wKQYDVR0OBCIEIF7ki9qHqTi5IF8Y1aGyuptM16tO\n1EJ8lb80as0ichmTMAoGCCqGSM49BAMCA0cAMEQCIC7QzJH1g9a9l+ie8Qs1jr81\n5c+z22CbnoLSEEtpYJEsAiAhSiJGtzJJOz/CM+ldyWLSjV8BYoIc3OBDH74mFd+l\n4g==\n-----END CERTIFICATE-----\n"
             },
             "grpcOptions": {
-                "ssl-target-name-override": "peer2.org1.frogfrogjump.com",
-                "hostnameOverride": "peer2.org1.frogfrogjump.com"
+                "ssl-target-name-override": "peer2.org1.example.com",
+                "hostnameOverride": "peer2.org1.example.com"
             }
         }
     },
     "certificateAuthorities": {
-        "ca.org1.frogfrogjump.com": {
+        "ca.org1.example.com": {
             "url": "https://${NODE1}:7054",
-            "caName": "ca.org1.frogfrogjump.com",
+            "caName": "ca.org1.example.com",
             "tlsCACerts": {
                 "pem": "-----BEGIN CERTIFICATE-----\nMIICZTCCAgugAwIBAgIQWSTZHuP5ZmPcS0iviGWlIzAKBggqhkjOPQQDAjB9MQsw\nCQYDVQQGEwJVUzETMBEGA1UECBMKQ2FsaWZvcm5pYTEWMBQGA1UEBxMNU2FuIEZy\nYW5jaXNjbzEeMBwGA1UEChMVb3JnMS5mcm9nZnJvZ2p1bXAuY29tMSEwHwYDVQQD\nExhjYS5vcmcxLmZyb2dmcm9nanVtcC5jb20wHhcNMTkxMTE0MDgxMTAwWhcNMjkx\nMTExMDgxMTAwWjB9MQswCQYDVQQGEwJVUzETMBEGA1UECBMKQ2FsaWZvcm5pYTEW\nMBQGA1UEBxMNU2FuIEZyYW5jaXNjbzEeMBwGA1UEChMVb3JnMS5mcm9nZnJvZ2p1\nbXAuY29tMSEwHwYDVQQDExhjYS5vcmcxLmZyb2dmcm9nanVtcC5jb20wWTATBgcq\nhkjOPQIBBggqhkjOPQMBBwNCAATXreaW69Hhg6apoMI06WUNSFvBu/+/CnXSJx8u\n6eyklb7rVbPJmz2JkrmuoRbVcFZBW9+sff4yelxV3bsZbNRVo20wazAOBgNVHQ8B\nAf8EBAMCAaYwHQYDVR0lBBYwFAYIKwYBBQUHAwIGCCsGAQUFBwMBMA8GA1UdEwEB\n/wQFMAMBAf8wKQYDVR0OBCIEIL3O8i9a4zuh2BKruXHo9ub8xG/vqkl6uUa+GIai\nmYU4MAoGCCqGSM49BAMCA0gAMEUCIQDLys4eMJQs5y/wLNrINDSSfMIP19+4qDfg\nCgTxpdtlZgIgTx8fMCA3HPdnq9mTjhxtZ0OkSsOhOlrEhlD2TqCM26w=\n-----END CERTIFICATE-----\n"
             },
