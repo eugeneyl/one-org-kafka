@@ -2,6 +2,7 @@
 A Fabric Network of 1 Orderer with Kafka, 1 Organization with 3 peers, deployed on 3 nodes.
 
 The set up of the nodes are as followed: 
+
 | Node | Zookeeper | Kafka | Orderer | Peer | CLI |
 | --- | --- | --- | --- | --- | --- |
 | 1 | zookeeper0 | kafka0, kafka1 | orderer0.frogfrogjump.com | peer0.org1.frogfrogjump.com|cli |
