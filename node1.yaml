@@ -2,21 +2,21 @@
 version: '2'
 
 volumes:
-    orderer0.frogfrogjump.com:
-    peer0.org1.frogfrogjump.com:
+    orderer0.example.com:
+    peer0.org1.example.com:
 
 networks:
     fabric:
         external: true
 
 services:
-    orderer0.frogfrogjump.com:
+    orderer0.example.com:
         extends:
             file: nodebase.yaml
             service: orderer
-        container_name: orderer0.frogfrogjump.com
+        container_name: orderer0.example.com
         environment:
-            - ORDERER_HOST=orderer0.frogfrogjump.com
+            - ORDERER_HOST=orderer0.example.com
             - CONFIGTX_ORDERER_ORDERERTYPE=kafka
             - CONFIGTX_ORDERER_KAFKA_BROKERS=[kafka0:9092,kafka1:9192]
             - ORDERER_KAFKA_RETRY_SHORTINTERVAL=1s
@@ -31,8 +31,8 @@ services:
             # - kafka2
             # - kafka3
         volumes:
-            - ./crypto-config/ordererOrganizations/frogfrogjump.com/orderers/orderer0.frogfrogjump.com/msp:/var/hyperledger/msp
-            - ./crypto-config/ordererOrganizations/frogfrogjump.com/orderers/orderer0.frogfrogjump.com/tls:/var/hyperledger/tls
+            - ./crypto-config/ordererOrganizations/example.com/orderers/orderer0.example.com/msp:/var/hyperledger/msp
+            - ./crypto-config/ordererOrganizations/example.com/orderers/orderer0.example.com/tls:/var/hyperledger/tls
             - ./channel-artifacts/:/var/hyperledger/configs
         networks:
             - fabric
@@ -141,42 +141,42 @@ services:
     #         - 9393:9093
     #     hostname: kafka3
       
-    ca.org1.frogfrogjump.com:
+    ca.org1.example.com:
         image: hyperledger/fabric-ca
-        container_name: ca.org1.frogfrogjump.com
+        container_name: ca.org1.example.com
         environment:
             - FABRIC_CA_HOME=/etc/hyperledger/fabric-ca-server
-            - FABRIC_CA_SERVER_CA_NAME=ca.org1.frogfrogjump.com
-            - FABRIC_CA_SERVER_CA_CERTFILE=/etc/hyperledger/fabric-ca-server-config/ca.org1.frogfrogjump.com-cert.pem
+            - FABRIC_CA_SERVER_CA_NAME=ca.org1.example.com
+            - FABRIC_CA_SERVER_CA_CERTFILE=/etc/hyperledger/fabric-ca-server-config/ca.org1.example.com-cert.pem
             - FABRIC_CA_SERVER_CA_KEYFILE=/etc/hyperledger/fabric-ca-server-config/dcd40c34f54332917386eff9d9fafef10c85198be358491e49c004a0e227c93a_sk
             - FABRIC_CA_SERVER_TLS_ENABLED=true
-            - FABRIC_CA_SERVER_TLS_CERTFILE=/etc/hyperledger/fabric-ca-server-config/ca.org1.frogfrogjump.com-cert.pem
+            - FABRIC_CA_SERVER_TLS_CERTFILE=/etc/hyperledger/fabric-ca-server-config/ca.org1.example.com-cert.pem
             - FABRIC_CA_SERVER_TLS_KEYFILE=/etc/hyperledger/fabric-ca-server-config/dcd40c34f54332917386eff9d9fafef10c85198be358491e49c004a0e227c93a_sk
 
         ports:
             - "7054:7054"
         command: sh -c 'fabric-ca-server start -b admin:adminpw'
         volumes:
-            - ./crypto-config/peerOrganizations/org1.frogfrogjump.com/ca/:/etc/hyperledger/fabric-ca-server-config
+            - ./crypto-config/peerOrganizations/org1.example.com/ca/:/etc/hyperledger/fabric-ca-server-config
         networks:
             - fabric
 
-    peer0.org1.frogfrogjump.com:
-        container_name: peer0.org1.frogfrogjump.com
+    peer0.org1.example.com:
+        container_name: peer0.org1.example.com
         extends:
             file: nodebase.yaml
             service: peer
         environment:
-            - CORE_PEER_ID=peer0.org1.frogfrogjump.com
-            - CORE_PEER_ADDRESS=peer0.org1.frogfrogjump.com:7051
-            - CORE_PEER_GOSSIP_BOOTSTRAP=peer1.org1.frogfrogjump.com:7051
-            - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer0.org1.frogfrogjump.com:7051
+            - CORE_PEER_ID=peer0.org1.example.com
+            - CORE_PEER_ADDRESS=peer0.org1.example.com:7051
+            - CORE_PEER_GOSSIP_BOOTSTRAP=peer1.org1.example.com:7051
+            - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer0.org1.example.com:7051
             - CORE_PEER_LOCALMSPID=Org1MSP
         volumes:
             - /var/run/:/host/var/run/
-            - ./crypto-config/peerOrganizations/org1.frogfrogjump.com/peers/peer0.org1.frogfrogjump.com/msp:/etc/hyperledger/fabric/msp
-            - ./crypto-config/peerOrganizations/org1.frogfrogjump.com/peers/peer0.org1.frogfrogjump.com/tls:/etc/hyperledger/fabric/tls
-            - peer0.org1.frogfrogjump.com:/var/hyperledger/production
+            - ./crypto-config/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/msp:/etc/hyperledger/fabric/msp
+            - ./crypto-config/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls:/etc/hyperledger/fabric/tls
+            - peer0.org1.example.com:/var/hyperledger/production
         ports:
             - 7051:7051
             - 7053:7053
@@ -194,13 +194,13 @@ services:
             #- FABRIC_LOGGING_SPEC=DEBUG
             - FABRIC_LOGGING_SPEC=INFO
             - CORE_PEER_ID=cli
-            - CORE_PEER_ADDRESS=peer0.org1.frogfrogjump.com:7051
+            - CORE_PEER_ADDRESS=peer0.org1.example.com:7051
             - CORE_PEER_LOCALMSPID=Org1MSP
             - CORE_PEER_TLS_ENABLED=true
-            - CORE_PEER_TLS_CERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.frogfrogjump.com/peers/peer0.org1.frogfrogjump.com/tls/server.crt
-            - CORE_PEER_TLS_KEY_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.frogfrogjump.com/peers/peer0.org1.frogfrogjump.com/tls/server.key
-            - CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.frogfrogjump.com/peers/peer0.org1.frogfrogjump.com/tls/ca.crt
-            - CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.frogfrogjump.com/users/Admin@org1.frogfrogjump.com/msp
+            - CORE_PEER_TLS_CERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls/server.crt
+            - CORE_PEER_TLS_KEY_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls/server.key
+            - CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls/ca.crt
+            - CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp
         working_dir: /opt/gopath/src/github.com/hyperledger/fabric/peer
         command: /bin/bash
         volumes:
@@ -210,7 +210,7 @@ services:
             - ./scripts:/opt/gopath/src/github.com/hyperledger/fabric/peer/scripts/
             - ./channel-artifacts:/opt/gopath/src/github.com/hyperledger/fabric/peer/channel-artifacts
         depends_on:
-            - orderer0.frogfrogjump.com
-            - peer0.org1.frogfrogjump.com
+            - orderer0.example.com
+            - peer0.org1.example.com
         networks:
           - fabric

@@ -7,7 +7,7 @@ The set up of the nodes are as followed:
 
 | Node | Zookeeper | Kafka | Orderer | Peer | CLI |
 | --- | --- | --- | --- | --- | --- |
-| 1 | zookeeper0 | kafka0, kafka1 | orderer0.frogfrogjump.com | peer0.org1.frogfrogjump.com|cli |
-| 2 ||  | | peer1.org1.frogfrogjump.com|cli |
-| 3 | | | | peer2.org1.frogfrogjump.com|cli |
+| 1 | zookeeper0 | kafka0, kafka1 | orderer0.example.com | peer0.org1.example.com|cli |
+| 2 ||  | | peer1.org1.example.com|cli |
+| 3 | | | | peer2.org1.example.com|cli |
 
