@@ -190,7 +190,7 @@ After you have set up your network, you can add the following feature to familia
   1. Sample orders chaincode (Set up during this tutorial)
   2. [Magento Orders](https://github.com/eugeneyl/one-org-kafka/tree/master/chaincode/magento_order)
   3. [Magento Products](https://github.com/eugeneyl/one-org-kafka/tree/master/chaincode/magento_product)
-  4. [Basic Tokens]](https://github.com/eugeneyl/one-org-kafka/tree/master/chaincode/basic_tokens)
+  4. [Basic Tokens](https://github.com/eugeneyl/one-org-kafka/tree/master/chaincode/basic_tokens)
   5. (Coming Soon) ERC-like tokens on Hyperledger Fabric
 - Setting up of API Servers to call chaincode functions through API calls. Currently implemented API servers:
   - [Sample API Server](https://github.com/eugeneyl/one-org-kafka/tree/master/sample_apiserver) using sample orders chaincode. 
