@@ -48,7 +48,7 @@ npm install express body-parser --save
 - Run the API server. (You can use pm2 or docker to run this in the background.)
 
 ```bash
-node apiserver.js {username}
+node order_product_apiserver.js {username}
 ```
 
 
