@@ -3,6 +3,8 @@
 SYS_CHANNEL="sys-channel"
 CHANNEL_NAME="mychannel"
 
+export $(egrep -v '^#' .env | xargs)
+
 if [ -d "crypto-config" ]; then
 rm -Rf crypto-config
 fi
