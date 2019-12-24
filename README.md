@@ -5,6 +5,8 @@ This setup uses docker swarm. If you want to use extra_hosts, call `git checkout
 
 ### Nodes Configuration
 
+The set up of the nodes are as followed: 
+
 | Node | Zookeeper | Kafka | Orderer | Peer | CLI |
 | --- | --- | --- | --- | --- | --- |
 | 1 | zookeeper0 | kafka0, kafka1 | orderer0.example.com | peer0.org1.example.com|cli |
