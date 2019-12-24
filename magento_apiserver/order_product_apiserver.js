@@ -38,7 +38,7 @@ app.post('/api/createProduct/', async function(req, res) {
         const gateway = new Gateway();
         await gateway.connect(ccpPath, { wallet, identity: user, discovery: { enabled: true, asLocalhost: false }});
         const network = await gateway.getNetwork('mychannel');
-        const contract = network.getContract('order');
+        const contract = network.getContract('magento_product');
         await contract.submitTransaction('createOrder', req.body.sku);
         console.log('Transaction has been submitted');
         res.send('Transaction has been submitted');
@@ -54,7 +54,7 @@ app.get('/api/queryProduct/', async function(req, res) {
         const gateway = new Gateway();
         await gateway.connect(ccpPath, { wallet, identity: user, discovery: { enabled: true, asLocalhost: false }});
         const network = await gateway.getNetwork('mychannel');
-        const contract = network.getContract('product');
+        const contract = network.getContract('magento_product');
         const result = await contract.evaluateTransaction('queryProduct', req.body.id);
         console.log(`Transaction has been evaluated, result is: ${result.toString()}`);
         res.status(200).json({response: result.toString()});
@@ -69,7 +69,7 @@ app.get('/api/queryAllProducts/', async function(req, res) {
         const gateway = new Gateway();
         await gateway.connect(ccpPath, { wallet, identity: user, discovery: { enabled: true, asLocalhost: false } });
         const network = await gateway.getNetwork('mychannel');
-        const contract = network.getContract('product');
+        const contract = network.getContract('magento_product');
         const result = await contract.evaluateTransaction('queryAllProducts');
         console.log(`Transaction has been evaluated, result is: ${result.toString()}`);
         res.status(200).json({response: result.toString()});
@@ -85,7 +85,7 @@ app.put('/api/editProduct/', async function(req, res) {
         const gateway = new Gateway();
         await gateway.connect(ccpPath, { wallet, identity: user, discovery: { enabled: true, asLocalhost: false } });
         const network = await gateway.getNetwork('mychannel');
-        const contract = network.getContract('product');
+        const contract = network.getContract('magento_product');
         await contract.submitTransaction('editProduct', req.body.sku);
         console.log('Transaction has been submitted');
         res.send('Transaction has been submitted');
@@ -100,7 +100,7 @@ app.delete('/api/deleteProduct/', async function(req, res) {
         const gateway = new Gateway();
         await gateway.connect(ccpPath, { wallet, identity: user, discovery: { enabled: true, asLocalhost: false } });
         const network = await gateway.getNetwork('mychannel');
-        const contract = network.getContract('product');
+        const contract = network.getContract('magento_product');
         await contract.submitTransaction('deleteProduct', req.body.id);
         console.log('Transaction has been submitted');
         res.send('Transaction has been submitted');
@@ -115,7 +115,7 @@ app.post('/api/createOrder/', async function(req, res) {
         const gateway = new Gateway();
         await gateway.connect(ccpPath, { wallet, identity: user, discovery: { enabled: true, asLocalhost: false }});
         const network = await gateway.getNetwork('mychannel');
-        const contract = network.getContract('order');
+        const contract = network.getContract('magento_order');
         await contract.submitTransaction('createOrder', req.body.entityId);
         console.log('Transaction has been submitted');
         res.send('Transaction has been submitted');
@@ -131,7 +131,7 @@ app.get('/api/queryOrder/', async function(req, res) {
         const gateway = new Gateway();
         await gateway.connect(ccpPath, { wallet, identity: user, discovery: { enabled: true, asLocalhost: false } });
         const network = await gateway.getNetwork('mychannel');
-        const contract = network.getContract('order');
+        const contract = network.getContract('magento_order');
         const result = await contract.evaluateTransaction('queryOrder', req.body.entityId);
         console.log(`Transaction has been evaluated, result is: ${result.toString()}`);
         res.status(200).json({response: result.toString()});
@@ -146,7 +146,7 @@ app.get('/api/queryAllOrders/', async function(req, res) {
         const gateway = new Gateway();
         await gateway.connect(ccpPath, { wallet, identity: user, discovery: { enabled: true, asLocalhost: false } });
         const network = await gateway.getNetwork('mychannel');
-        const contract = network.getContract('order');
+        const contract = network.getContract('magento_order');
         const result = await contract.evaluateTransaction('queryAllOrders');
         console.log(`Transaction has been evaluated, result is: ${result.toString()}`);
         res.status(200).json({response: result.toString()});
@@ -162,7 +162,7 @@ app.put('/api/editOrder/', async function(req, res) {
         const gateway = new Gateway();
         await gateway.connect(ccpPath, { wallet, identity: user, discovery: { enabled: true, asLocalhost: false } });
         const network = await gateway.getNetwork('mychannel');
-        const contract = network.getContract('order');
+        const contract = network.getContract('magento_order');
         await contract.submitTransaction('editOrder', req.body.entityId);
         console.log('Transaction has been submitted');
         res.send('Transaction has been submitted');
@@ -177,7 +177,7 @@ app.delete('/api/deleteOrder/', async function(req, res) {
         const gateway = new Gateway();
         await gateway.connect(ccpPath, { wallet, identity: user, discovery: { enabled: true, asLocalhost: false } });
         const network = await gateway.getNetwork('mychannel');
-        const contract = network.getContract('order');
+        const contract = network.getContract('magento_order');
         await contract.submitTransaction('deleteOrder', req.body.entityId);
         console.log('Transaction has been submitted');
         res.send('Transaction has been submitted');
