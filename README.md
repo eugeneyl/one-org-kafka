@@ -181,6 +181,14 @@ In order for you to tear down the entire Hyperledger Fabric network, you can cal
 docker rm -f $(docker ps -aq) && docker volume prune
 ```
 
+### Nth peer
+
+In order for you to have more peer nodes, you need to make the following edits:
+
+1. Add the IP address of the new node to the `.env`.
+2. Change the count number of peers in `crypto-config.yaml` to desired number.
+3. Create a docker compose file for each of the new nodes using the `node_example.yaml` file.
+
 ### Next step forward
 
 After you have set up your network, you can add the following feature to familiarise youself with the HLF network.
