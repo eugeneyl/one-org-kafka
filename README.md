@@ -193,7 +193,7 @@ In order for you to have more peer nodes, you need to make the following edits:
 
 After you have set up your network, you can add the following feature to familiarise youself with the HLF network.
 
-- (Documentation to be done) Setting up Hyperledger Explorer to visualise the network.
+- Setting up [Hyperledger Explorer](https://github.com/eugeneyl/one-org-kafka/tree/master/explorer) to visualise the network.
 - Install other chaincodes. Currently implemented chaincodes:
   1. Sample orders chaincode (Set up during this tutorial)
   2. [Magento Orders](https://github.com/eugeneyl/one-org-kafka/tree/master/chaincode/magento_order)
