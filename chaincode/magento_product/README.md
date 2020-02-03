@@ -43,35 +43,35 @@ After setting up the chaincode, you can test the different functions available:
 
 #### Query
 
-- queryProduct(entity_id)
+- queryProduct(id)
 
 ```bash
-docker exec cli peer chaincode query -C mychannel -n magento_order -c '{"Args":["queryProduct", "{entity_id}"]}'
+docker exec cli peer chaincode query -C mychannel -n magento_product -c '{"Args":["queryProduct", "{id}"]}'
 ```
 
 - queryAllProducts()
 
 ```bash
-docker exec cli peer chaincode query -C mychannel -n magento_order -c '{"Args":["queryAllProducts"]}'
+docker exec cli peer chaincode query -C mychannel -n magento_product -c '{"Args":["queryAllProducts"]}'
 ```
 
 #### Invoke
 
-- createProduct(entity_id)
+- createProduct(sku)
 
 ```bash
-docker exec cli peer chaincode invoke -o orderer0.example.com:7050 -C mychannel -n magento_order -c '{"Args":["createOrder","{entity_id}"]}' --tls true --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/example.com/orderers/orderer0.example.com/msp/tlscacerts/tlsca.example.com-cert.pem
+docker exec cli peer chaincode invoke -o orderer0.example.com:7050 -C mychannel -n magento_product -c '{"Args":["createProduct","{sku}"]}' --tls true --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/example.com/orderers/orderer0.example.com/msp/tlscacerts/tlsca.example.com-cert.pem
 ```
 
-- editProduct(entity_id)
+- editProduct(sku)
 
 ```bash
-docker exec cli peer chaincode invoke -o orderer0.example.com:7050 -C mychannel -n magento_order -c '{"Args":["editOrder","{entity_id}"]}' --tls true --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/example.com/orderers/orderer0.example.com/msp/tlscacerts/tlsca.example.com-cert.pem
+docker exec cli peer chaincode invoke -o orderer0.example.com:7050 -C mychannel -n magento_product -c '{"Args":["editProduct","{sku}"]}' --tls true --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/example.com/orderers/orderer0.example.com/msp/tlscacerts/tlsca.example.com-cert.pem
 ```
 
-- deleteProduct(entity_id)
+- deleteProduct(id)
 
 ```bash
-docker exec cli peer chaincode invoke -o orderer0.example.com:7050 -C mychannel -n magento_order -c '{"Args":["deleteOrder","{entity_id}"]}' --tls true --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/example.com/orderers/orderer0.example.com/msp/tlscacerts/tlsca.example.com-cert.pem
+docker exec cli peer chaincode invoke -o orderer0.example.com:7050 -C mychannel -n magento_product -c '{"Args":["deleteProduct","{id}"]}' --tls true --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/example.com/orderers/orderer0.example.com/msp/tlscacerts/tlsca.example.com-cert.pem
 ```
 

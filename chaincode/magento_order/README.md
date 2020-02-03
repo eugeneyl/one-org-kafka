@@ -44,11 +44,11 @@ docker exec cli peer chaincode invoke -o orderer0.example.com:7050 -C mychannel 
 After setting up the chaincode, you can test the different functions available:
 
 #### Query
-
-- queryOrder(id)
+entity_id
+- queryOrder(entity_id)
 
 ```bash
-docker exec cli peer chaincode query -C mychannel -n magento_order -c '{"Args":["queryOrder", "{id}"]}'
+docker exec cli peer chaincode query -C mychannel -n magento_order -c '{"Args":["queryOrder", "{entity_id}"]}'
 ```
 
 - queryAllOrders()
@@ -59,21 +59,21 @@ docker exec cli peer chaincode query -C mychannel -n magento_order -c '{"Args":[
 
 #### Invoke
 
-- createOrder(sku)
+- createOrder(entity_id)
 
 ```bash
-docker exec cli peer chaincode invoke -o orderer0.example.com:7050 -C mychannel -n magento_order -c '{"Args":["createOrder","{sku}"]}' --tls true --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/example.com/orderers/orderer0.example.com/msp/tlscacerts/tlsca.example.com-cert.pem
+docker exec cli peer chaincode invoke -o orderer0.example.com:7050 -C mychannel -n magento_order -c '{"Args":["createOrder","{entity_id}"]}' --tls true --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/example.com/orderers/orderer0.example.com/msp/tlscacerts/tlsca.example.com-cert.pem
 ```
 
-- editOrder(sku)
+- editOrder(entity_id)
 
 ```bash
-docker exec cli peer chaincode invoke -o orderer0.example.com:7050 -C mychannel -n magento_order -c '{"Args":["editOrder","{sku}"]}' --tls true --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/example.com/orderers/orderer0.example.com/msp/tlscacerts/tlsca.example.com-cert.pem
+docker exec cli peer chaincode invoke -o orderer0.example.com:7050 -C mychannel -n magento_order -c '{"Args":["editOrder","{entity_id}"]}' --tls true --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/example.com/orderers/orderer0.example.com/msp/tlscacerts/tlsca.example.com-cert.pem
 ```
 
-- deleteOrder(id)
+- deleteOrder(entity_id)
 
 ```bash
-docker exec cli peer chaincode invoke -o orderer0.example.com:7050 -C mychannel -n magento_order -c '{"Args":["deleteOrder","{id}"]}' --tls true --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/example.com/orderers/orderer0.example.com/msp/tlscacerts/tlsca.example.com-cert.pem
+docker exec cli peer chaincode invoke -o orderer0.example.com:7050 -C mychannel -n magento_order -c '{"Args":["deleteOrder","{entity_id}"]}' --tls true --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/example.com/orderers/orderer0.example.com/msp/tlscacerts/tlsca.example.com-cert.pem
 ```
 
