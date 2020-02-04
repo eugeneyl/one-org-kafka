@@ -44,13 +44,23 @@ docker exec cli peer channel create -o orderer0.example.com:7050 -c mychannel -f
 
 docker exec cli peer channel create -o orderer0.example.com:7050 -c mychannel -f ./channel-artifacts/channel.tx --tls true --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/example.com/orderers/orderer0.example.com/msp/tlscacerts/tlsca.example.com-cert.pem
 
+docker exec cli0 peer channel create -o orderer0.example.com:7050 -c mychannel -f ./channel-artifacts/channel.tx --tls true --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/example.com/orderers/orderer0.example.com/msp/tlscacerts/tlsca.example.com-cert.pem
+
 docker exec cli peer channel join -b mychannel.block
+docker exec cli0 peer channel join -b mychannel.block
 
 docker cp cli:/opt/gopath/src/github.com/hyperledger/fabric/peer/mychannel.block .
+docker cp cli0:/opt/gopath/src/github.com/hyperledger/fabric/peer/mychannel.block .
 
 docker cp mychannel.block cli:/opt/gopath/src/github.com/hyperledger/fabric/peer/
+docker cp mychannel.block cli1:/opt/gopath/src/github.com/hyperledger/fabric/peer/
+docker cp mychannel.block cli2:/opt/gopath/src/github.com/hyperledger/fabric/peer/
 
 docker exec cli peer channel join -b mychannel.block
+docker exec cli1 peer channel join -b mychannel.block
+docker exec cli2 peer channel join -b mychannel.block
+
+docker exec cli0 peer channel update -o orderer.example.com:7050 -c $CHANNEL_NAME -f ./channel-artifacts/${CORE_PEER_LOCALMSPID}anchors.tx >&log.txt
 
 docker exec cli peer chaincode install -n orders -v 1.0 -p github.com/chaincode/
 
@@ -72,3 +82,6 @@ docker exec cli peer chaincode query -C mychannel -n orders -c '{"Args":["queryO
 docker rm -f $(docker ps -aq) && docker rmi -f $(docker images | grep dev | awk '{print $3}') && docker volume prune
 
 curl -d '{"orderno":"ORDER12","orderid":"1111111","customerid":"2222222","status":"pending"}' -H "Content-Type: application/json" -X POST http://peer3.frogfrogjump:5000/api/addorder
+
+        "github.com/hyperledger/fabric/core/chaincode/shim"
+        sc "github.com/hyperledger/fabric/protos/peer"
