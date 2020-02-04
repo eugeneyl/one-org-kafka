@@ -29,6 +29,12 @@ Organizations:
           Admins:
               Type: Signature
               Rule: "OR('Org1MSP.admin')"
+          Endorsement:
+              Type: Signature
+              Rule: "OR('Org1MSP.peer')"
+      AnchorPeers:
+          - Hosts: peer0.org1.example.com
+            Port: 7051
 
     # - &Org2
     #     Name: Org2MSP
