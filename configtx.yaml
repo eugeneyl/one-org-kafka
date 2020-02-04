@@ -47,16 +47,19 @@ Organizations:
 
 Capabilities:
     Channel: &ChannelCapabilities
-        V1_4_3: true
-        V1_3: false
+        V2_0: true
+        # V1_4_3: true
+        # V1_3: false
     Orderer: &OrdererCapabilities
-        V1_4_2: true
-        V1_1: false
+        V2_0: true
+        # V1_4_2: true
+        # V1_1: false
     Application: &ApplicationCapabilities
-        V1_4_2: true
-        V1_3: false
-        V1_2: false
-        V1_1: false
+        V2_0: true
+        # V1_4_2: true
+        # V1_3: false
+        # V1_2: false
+        # V1_1: false
 
 Application: &ApplicationDefaults
     Organizations:
@@ -70,6 +73,12 @@ Application: &ApplicationDefaults
         Admins:
             Type: ImplicitMeta
             Rule: "MAJORITY Admins"
+        LifecycleEndorsement:
+            Type: ImplicitMeta
+            Rule: "MAJORITY Endorsement"
+        Endorsement:
+            Type: ImplicitMeta
+            Rule: "MAJORITY Endorsement" 
 
     Capabilities:
         <<: *ApplicationCapabilities
