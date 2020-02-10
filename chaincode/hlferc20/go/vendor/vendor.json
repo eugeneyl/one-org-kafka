@@ -1,0 +1,70 @@
+{
+	"comment": "",
+	"ignore": "test",
+	"package": [
+		{
+			"checksumSHA1": "VOAfDWo8r76Pqpl3NVtmkw/UMd4=",
+			"path": "github.com/btcsuite/btcd/btcec",
+			"revision": "f3ec13030e4e828869954472cbc51ac36bee5c1d",
+			"revisionTime": "2019-11-13T02:27:49Z"
+		},
+		{
+			"checksumSHA1": "iNFm71hlYpRkXPyHZ4plQQXM6RM=",
+			"path": "github.com/ethereum/go-ethereum/common",
+			"revision": "c9dce0bfd769808f75aedbe119caa5f67be26b76",
+			"revisionTime": "2019-12-05T21:16:35Z"
+		},
+		{
+			"checksumSHA1": "d98c5mbUux2KZqWOVIr4F8Qd22Q=",
+			"path": "github.com/ethereum/go-ethereum/common/hexutil",
+			"revision": "c9dce0bfd769808f75aedbe119caa5f67be26b76",
+			"revisionTime": "2019-12-05T21:16:35Z"
+		},
+		{
+			"checksumSHA1": "DHETzc73aN40YHhMczku7MQV1iE=",
+			"path": "github.com/ethereum/go-ethereum/common/math",
+			"revision": "c9dce0bfd769808f75aedbe119caa5f67be26b76",
+			"revisionTime": "2019-12-05T21:16:35Z"
+		},
+		{
+			"checksumSHA1": "pyUQKWiLgeo05Q7KtC/ADegvPj0=",
+			"path": "github.com/ethereum/go-ethereum/crypto",
+			"revision": "c9dce0bfd769808f75aedbe119caa5f67be26b76",
+			"revisionTime": "2019-12-05T21:16:35Z"
+		},
+		{
+			"checksumSHA1": "P+uCDhT4BK3/uL5Gs3XwdUtlkmE=",
+			"path": "github.com/ethereum/go-ethereum/crypto/secp256k1",
+			"revision": "c9dce0bfd769808f75aedbe119caa5f67be26b76",
+			"revisionTime": "2019-12-05T21:16:35Z",
+			"tree": true
+		},
+		{
+			"checksumSHA1": "axqDcfLugZv/9GB5rDXNVZvZAAU=",
+			"path": "github.com/ethereum/go-ethereum/rlp",
+			"revision": "c9dce0bfd769808f75aedbe119caa5f67be26b76",
+			"revisionTime": "2019-12-05T21:16:35Z"
+		},
+		{
+			"path": "github.com/hyperledger/fabric/core/chaincode/shim",
+			"revision": ""
+		},
+		{
+			"path": "github.com/hyperledger/fabric/protos/peer",
+			"revision": ""
+		},
+		{
+			"checksumSHA1": "qFGyJj85hWPiYSNSia9UwOvp/fA=",
+			"path": "golang.org/x/crypto/sha3",
+			"revision": "e7c4368fe9ddd156b5f1463283cb51c5b400c373",
+			"revisionTime": "2019-11-25T19:39:25Z"
+		},
+		{
+			"checksumSHA1": "2/z4EueF+LWm1l1PMr4LYvlI70w=",
+			"path": "golang.org/x/sys/cpu",
+			"revision": "ce4227a45e2eb77e5c847278dcc6a626742e2945",
+			"revisionTime": "2019-12-03T10:43:03Z"
+		}
+	],
+	"rootPath": "go"
+}
