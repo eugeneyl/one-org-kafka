@@ -29,6 +29,10 @@ services:
             - ./crypto-config/peerOrganizations/org1.example.com/peers/peer1.org1.example.com/msp:/etc/hyperledger/fabric/msp
             - ./crypto-config/peerOrganizations/org1.example.com/peers/peer1.org1.example.com/tls:/etc/hyperledger/fabric/tls
             - peer1.org1.example.com:/var/hyperledger/production
+        extra_hosts:
+            - "orderer0.org1.example.com:${NODE1}"
+            - "peer0.org1.example.com:${NODE1}"
+            - "peer2.org1.example.com:${NODE3}"
         ports:
             - 7051:7051
             - 7053:7053
@@ -70,6 +74,10 @@ services:
             - CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp
         working_dir: /opt/gopath/src/github.com/hyperledger/fabric/peer
         command: /bin/bash
+        extra_hosts:
+            - "orderer0.org1.example.com:${NODE1}"
+            - "peer0.org1.example.com:${NODE1}"
+            - "peer2.org1.example.com:${NODE3}"
         volumes:
             - /var/run/:/host/var/run/
             - ./chaincode/:/opt/gopath/src/github.com/chaincode

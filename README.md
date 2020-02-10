@@ -53,7 +53,7 @@ su - frog
 4. Fetch fabric image and other tools required to generate channel artefacts and certificates.
 
 ```bash
-curl -sSL http://bit.ly/2ysbOFE | bash -s
+curl -sSL http://bit.ly/2ysbOFE | bash -s 1.4.4
 ```
 
 5. Set up the overlay network using docker swarm (our example IP address 167.71.121.213)

@@ -92,6 +92,9 @@ services:
             - zookeeper0
         networks:
             - fabric
+        extra_hosts:
+            - "peer1.org1.example.com:${NODE2}"
+            - "peer2.org1.example.com:${NODE3}"
         ports:
             - 9192:9192
             - 9193:9093
@@ -196,6 +199,9 @@ services:
             - ./crypto-config/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/msp:/etc/hyperledger/fabric/msp
             - ./crypto-config/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls:/etc/hyperledger/fabric/tls
             - peer0.org1.example.com:/var/hyperledger/production
+        extra_hosts:
+            - "peer1.org1.example.com:${NODE2}"
+            - "peer2.org1.example.com:${NODE3}"
         ports:
             - 7051:7051
             - 7053:7053
@@ -231,5 +237,8 @@ services:
         depends_on:
             - orderer0.example.com
             - peer0.org1.example.com
+        extra_hosts:
+            - "peer1.org1.example.com:${NODE2}"
+            - "peer2.org1.example.com:${NODE3}"
         networks:
           - fabric
