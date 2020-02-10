@@ -58,6 +58,7 @@ type ProductResponse struct {
 
 //Item is the structure of the products stored in API
 type Item struct {
+	ObjectType    string  `json:docType`
 	ID            int     `json:"id"`
 	Sku           string  `json:"sku"`
 	Name          string  `json:"name"`
@@ -120,6 +121,7 @@ func (s *SmartContract) initProducts(APIstub shim.ChaincodeStubInterface) sc.Res
 		json.Unmarshal(data, &responseObject)
 		for i := 0; i < len(responseObject.Items); i++ {
 			fmt.Println(responseObject.Items[i].Sku)
+			responseObject.Items[i].ObjectType = "product"
 			itemAsBytes, _ := json.Marshal(responseObject.Items[i])
 			key := "P" + strconv.Itoa(responseObject.Items[i].ID)
 			APIstub.PutState(key, itemAsBytes)
@@ -154,6 +156,7 @@ func (s *SmartContract) createProduct(APIstub shim.ChaincodeStubInterface, args 
 		// if len(item.Sku) == 0 {
 		// 	return shim.Error("Invalid SKU")
 		// }
+		item.ObjectType = "product"
 		key := "P" + strconv.Itoa(item.ID)
 		itemAsBytes, _ := json.Marshal(item)
 		APIstub.PutState(key, itemAsBytes)
@@ -249,6 +252,7 @@ func (s *SmartContract) editProduct(APIstub shim.ChaincodeStubInterface, args []
 			fmt.Println("Invalid SKU")
 			return shim.Error("Invalid SKU")
 		}
+		item.ObjectType = "product"
 		key := "P" + strconv.Itoa(item.ID)
 		itemAsBytes, _ := json.Marshal(item)
 		APIstub.PutState(key, itemAsBytes)

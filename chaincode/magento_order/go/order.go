@@ -56,6 +56,7 @@ type OrderResponse struct {
 }
 
 type Order struct {
+	ObjectType         string          `json:docType`
 	EntityID           int             `json:"entity_id"`
 	CreatedAt          string          `json:"created_at"`
 	CustomerEmail      string          `json:"customer_email"`
@@ -169,6 +170,7 @@ func (s *SmartContract) initOrders(APIstub shim.ChaincodeStubInterface) sc.Respo
 		json.Unmarshal(data, &responseObject)
 		for i := 0; i < len(responseObject.Orders); i++ {
 			fmt.Println(responseObject.Orders[i].EntityID)
+			responseObject.Orders[i].ObjectType = "orders"
 			orderAsBytes, _ := json.Marshal(responseObject.Orders[i])
 			key := "O" + strconv.Itoa(responseObject.Orders[i].EntityID)
 			APIstub.PutState(key, orderAsBytes)
@@ -263,6 +265,7 @@ func (s *SmartContract) createOrder(APIstub shim.ChaincodeStubInterface, args []
 			fmt.Println("Invalid order ID")
 			return shim.Error("Invalid order ID")
 		}
+		order.ObjectType = "orders"
 		key := "O" + strconv.Itoa(order.EntityID)
 		orderAsBytes, _ := json.Marshal(order)
 		APIstub.PutState(key, orderAsBytes)
@@ -301,6 +304,7 @@ func (s *SmartContract) editOrder(APIstub shim.ChaincodeStubInterface, args []st
 			fmt.Println("Invalid order ID")
 			return shim.Error("Invalid order ID")
 		}
+		order.ObjectType = "orders"
 		orderAsBytes, _ := json.Marshal(order)
 		APIstub.PutState(key, orderAsBytes)
 	}
