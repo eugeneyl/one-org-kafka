@@ -35,9 +35,9 @@ There are 2 files that you will be required to change to set up the explorer.
 
 - /one-org-kafka/connection-org1.json
   - Replace {ADMINKEY} to the actual private key file name of the admin. You can get this by running `ls /home/frog/one-org-kafka/crypto-config/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp/keystore/`. The file name will be a string of numbers followed by `_sk`. Eg: ca4d946a621c0f528af9a3a6d05083d16afa7763da38b7e6c8d48c346b1d3034_sk
-- `/one-org-kafka/blockchain-explorer/app/platform/fabric/config.json`
+- `/home/frog/blockchain-explorer/app/platform/fabric/config.json`
   - Change `profile` to `/home/frog/one-org-kafka/connection-org1.json`
-- `/one-org-kafka/blockchain-explorer/start.sh`
+- `/home/frog/blockchain-explorer/start.sh`
   - Change `DISCOVERY_AS_LOCALHOST` to false.
 
 4. Add entries in `/etc/hosts` such that they point to the Fabric Nodes. (This will not be necessary if the domain names are mapped to the right IP addresses.)

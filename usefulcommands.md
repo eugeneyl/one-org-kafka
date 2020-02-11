@@ -21,7 +21,7 @@ sudo apt-get install jq
 exit
 su - frog
 
-curl -sSL http://bit.ly/2ysbOFE | bash -s
+curl -sSL http://bit.ly/2ysbOFE | bash -s 1.4.4
 
 docker swarm init --advertise-addr {ip address of master node}
 

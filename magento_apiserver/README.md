@@ -24,7 +24,7 @@ node registerUser.js {username}
 > - `connection-org1.json`
 > - `wallet/{username}`
 >
-> Also, in the `order_product_apiserver,js` file, change the path of the wallet and connection profile such that it points to the actual path of the files above. 
+> Also, in the `order_product_apiserver.js` file, change the path of the wallet and connection profile such that it points to the actual path of the files above. 
 
 - Add entries in `/etc/hosts` such that they point to the Fabric Nodes. (This will not be necessary if the domain names are mapped to the right IP addresses.)
 
