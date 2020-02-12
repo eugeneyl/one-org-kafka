@@ -1,0 +1,324 @@
+version: '2'
+
+volumes:
+    orderer0.example.com:
+    peer0.org1.example.com:
+    peer1.org1.example.com:
+    peer2.org1.example.com:
+
+networks:
+    fabric:
+        external: false
+
+services:
+    orderer0.example.com:
+        extends:
+            file: nodebase.yaml
+            service: orderer
+        container_name: orderer0.example.com
+        environment:
+            - ORDERER_HOST=orderer0.example.com
+            - CONFIGTX_ORDERER_ORDERERTYPE=kafka
+            - CONFIGTX_ORDERER_KAFKA_BROKERS=[kafka0:9092,kafka1:9192]
+            - ORDERER_KAFKA_RETRY_SHORTINTERVAL=1s
+            - ORDERER_KAFKA_RETRY_SHORTTOTAL=30s
+            - ORDERER_KAFKA_VERBOSE=true
+            - ORDERER_GENERAL_GENESISPROFILE=SampleInsecureKafka
+            - ORDERER_ABSOLUTEMAXBYTES=10 MB
+            - ORDERER_PREFERREDMAXBYTES=512 KB
+        depends_on:
+            - kafka0
+            - kafka1
+            # - kafka2
+            # - kafka3
+        volumes:
+            - ./crypto-config/ordererOrganizations/example.com/orderers/orderer0.example.com/msp:/var/hyperledger/msp
+            - ./crypto-config/ordererOrganizations/example.com/orderers/orderer0.example.com/tls:/var/hyperledger/tls
+            - ./channel-artifacts/:/var/hyperledger/configs
+        networks:
+            - fabric
+        ports:
+            - 7050:7050
+
+    zookeeper0:
+        extends:
+            file: nodebase.yaml
+            service: zookeeper
+        container_name: zookeeper0
+        environment:
+            - ZOO_MY_ID=1
+            - ZOO_SERVERS=server.1=zookeeper0:2888:3888
+        networks:
+            - fabric
+        ports:
+            - 2181:2181
+            - 2888:2888
+            - 3888:3888
+
+    kafka0:
+        extends:
+            file: nodebase.yaml
+            service: kafka
+        container_name: kafka0
+        environment:
+            - KAFKA_BROKER_ID=0
+            - KAFKA_ZOOKEEPER_CONNECT=zookeeper0:2181
+            - KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://kafka0:9092
+            - KAFKA_MESSAGE_MAX_BYTES=1000012 B
+            - KAFKA_REPLICA_FETCH_MAX_BYTES=1048576 B
+            - KAFKA_REPLICA_FETCH_RESPONSE_MAX_BYTES=10485760 B
+        depends_on:
+            - zookeeper0
+        networks:
+            - fabric
+        ports:
+            - 9092:9092
+            - 9093:9093
+        hostname: kafka0
+
+    kafka1:
+        extends:
+            file: nodebase.yaml
+            service: kafka
+        container_name: kafka1
+        environment:
+            - KAFKA_PORT=9192
+            - KAFKA_BROKER_ID=1
+            - KAFKA_ZOOKEEPER_CONNECT=zookeeper0:2181
+            - KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://kafka1:9192
+            - KAFKA_MESSAGE_MAX_BYTES=1000012 B
+            - KAFKA_REPLICA_FETCH_MAX_BYTES=1048576 B
+            - KAFKA_REPLICA_FETCH_RESPONSE_MAX_BYTES=10485760 B
+        depends_on:
+            - zookeeper0
+        networks:
+            - fabric
+        ports:
+            - 9192:9192
+            - 9193:9093
+        hostname: kafka1
+
+    # kafka2:
+    #     extends:
+    #         file: nodebase.yaml
+    #         service: kafka
+    #     container_name: kafka2
+    #     environment:
+    #         - KAFKA_PORT=9292
+    #         - KAFKA_BROKER_ID=2
+    #         - KAFKA_ZOOKEEPER_CONNECT=zookeeper0:2181
+    #         - KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://kafka2:9292
+    #         - KAFKA_MESSAGE_MAX_BYTES=1000012 B
+    #         - KAFKA_REPLICA_FETCH_MAX_BYTES=1048576 B
+    #         - KAFKA_REPLICA_FETCH_RESPONSE_MAX_BYTES=10485760 B
+    #     depends_on:
+    #         - zookeeper0
+    #     networks:
+    #         - fabric
+    #     ports:
+    #         - 9292:9292
+    #         - 9293:9093
+    #     hostname: kafka2
+
+    # kafka3:
+    #     extends:
+    #         file: nodebase.yaml
+    #         service: kafka
+    #     container_name: kafka3
+    #     environment:
+    #         - KAFKA_PORT=9392
+    #         - KAFKA_BROKER_ID=3
+    #         - KAFKA_ZOOKEEPER_CONNECT=zookeeper0:2181
+    #         - KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://kafka3:9392
+    #         - KAFKA_MESSAGE_MAX_BYTES=1000012 B
+    #         - KAFKA_REPLICA_FETCH_MAX_BYTES=1048576 B
+    #         - KAFKA_REPLICA_FETCH_RESPONSE_MAX_BYTES=10485760 B
+    #     depends_on:
+    #         - zookeeper0
+    #     networks:
+    #         - fabric
+    #     ports:
+    #         - 9392:9392
+    #         - 9393:9093
+    #     hostname: kafka3
+      
+    ca.org1.example.com:
+        image: hyperledger/fabric-ca
+        container_name: ca.org1.example.com
+        environment:
+            - FABRIC_CA_HOME=/etc/hyperledger/fabric-ca-server
+            - FABRIC_CA_SERVER_CA_NAME=ca.org1.example.com
+            - FABRIC_CA_SERVER_CA_CERTFILE=/etc/hyperledger/fabric-ca-server-config/ca.org1.example.com-cert.pem
+            - FABRIC_CA_SERVER_CA_KEYFILE=/etc/hyperledger/fabric-ca-server-config/dcd40c34f54332917386eff9d9fafef10c85198be358491e49c004a0e227c93a_sk
+            - FABRIC_CA_SERVER_TLS_ENABLED=true
+            - FABRIC_CA_SERVER_TLS_CERTFILE=/etc/hyperledger/fabric-ca-server-config/ca.org1.example.com-cert.pem
+            - FABRIC_CA_SERVER_TLS_KEYFILE=/etc/hyperledger/fabric-ca-server-config/dcd40c34f54332917386eff9d9fafef10c85198be358491e49c004a0e227c93a_sk
+
+        ports:
+            - "7054:7054"
+        command: sh -c 'fabric-ca-server start -b admin:adminpw'
+        volumes:
+            - ./crypto-config/peerOrganizations/org1.example.com/ca/:/etc/hyperledger/fabric-ca-server-config
+        networks:
+            - fabric
+
+    peer0.org1.example.com:
+        container_name: peer0.org1.example.com
+        extends:
+            file: nodebase.yaml
+            service: peer
+        environment:
+            - CORE_PEER_ID=peer0.org1.example.com
+            - CORE_PEER_ADDRESS=peer0.org1.example.com:7051
+            - CORE_PEER_GOSSIP_BOOTSTRAP=peer1.org1.example.com:7051
+            - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer0.org1.example.com:7051
+            - CORE_PEER_LOCALMSPID=Org1MSP
+        volumes:
+            - /var/run/:/host/var/run/
+            - ./crypto-config/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/msp:/etc/hyperledger/fabric/msp
+            - ./crypto-config/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls:/etc/hyperledger/fabric/tls
+            - peer0.org1.example.com:/var/hyperledger/production
+        ports:
+            - 7051:7051
+            - 7053:7053
+        networks:
+            - fabric
+
+    peer1.org1.example.com:
+        container_name: peer1.org1.example.com
+        extends:
+            file: nodebase.yaml
+            service: peer
+        environment:
+            - CORE_PEER_ID=peer1.org1.example.com
+            - CORE_PEER_ADDRESS=peer1.org1.example.com:8051
+            - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer1.org1.example.com:8051
+            - CORE_PEER_GOSSIP_BOOTSTRAP=peer0.org1.example.com:7051
+            - CORE_PEER_LOCALMSPID=Org1MSP
+        volumes:
+            - /var/run/:/host/var/run/
+            - ./crypto-config/peerOrganizations/org1.example.com/peers/peer1.org1.example.com/msp:/etc/hyperledger/fabric/msp
+            - ./crypto-config/peerOrganizations/org1.example.com/peers/peer1.org1.example.com/tls:/etc/hyperledger/fabric/tls
+            - peer1.org1.example.com:/var/hyperledger/production
+        ports:
+            - 8051:8051
+            - 8053:8053
+        networks:
+            - fabric
+        
+    peer2.org1.example.com:
+        container_name: peer2.org1.example.com
+        extends:
+            file: nodebase.yaml
+            service: peer
+        environment:
+            - CORE_PEER_ID=peer2.org1.example.com
+            - CORE_PEER_ADDRESS=peer2.org1.example.com:9051
+            - CORE_PEER_GOSSIP_BOOTSTRAP=peer0.org1.example.com:9051
+            - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer2.org1.example.com:7051
+            - CORE_PEER_LOCALMSPID=Org1MSP
+        volumes:
+            - /var/run/:/host/var/run/
+            - ./crypto-config/peerOrganizations/org1.example.com/peers/peer2.org1.example.com/msp:/etc/hyperledger/fabric/msp
+            - ./crypto-config/peerOrganizations/org1.example.com/peers/peer2.org1.example.com/tls:/etc/hyperledger/fabric/tls
+            - peer2.org1.example.com:/var/hyperledger/production
+        ports:
+            - 9051:9051
+            - 9053:9053
+        networks:
+            - fabric
+
+    cli0:
+        container_name: cli0
+        image: hyperledger/fabric-tools
+        tty: true
+        stdin_open: true
+        environment:
+            - GOPATH=/opt/gopath
+            - CORE_VM_ENDPOINT=unix:///host/var/run/docker.sock
+            #- FABRIC_LOGGING_SPEC=DEBUG
+            - FABRIC_LOGGING_SPEC=INFO
+            - CORE_PEER_ID=cli
+            - CORE_PEER_ADDRESS=peer0.org1.example.com:7051
+            - CORE_PEER_LOCALMSPID=Org1MSP
+            - CORE_PEER_TLS_ENABLED=true
+            - CORE_PEER_TLS_CERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls/server.crt
+            - CORE_PEER_TLS_KEY_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls/server.key
+            - CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls/ca.crt
+            - CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp
+        working_dir: /opt/gopath/src/github.com/hyperledger/fabric/peer
+        command: /bin/bash
+        volumes:
+            - /var/run/:/host/var/run/
+            - ./chaincode/:/opt/gopath/src/github.com/chaincode
+            - ./crypto-config:/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/
+            - ./scripts:/opt/gopath/src/github.com/hyperledger/fabric/peer/scripts/
+            - ./channel-artifacts:/opt/gopath/src/github.com/hyperledger/fabric/peer/channel-artifacts
+        depends_on:
+            - orderer0.example.com
+            - peer0.org1.example.com
+        networks:
+          - fabric
+    
+    cli1:
+        container_name: cli1
+        image: hyperledger/fabric-tools
+        tty: true
+        stdin_open: true
+        environment:
+            - GOPATH=/opt/gopath
+            - CORE_VM_ENDPOINT=unix:///host/var/run/docker.sock
+            #- FABRIC_LOGGING_SPEC=DEBUG
+            - FABRIC_LOGGING_SPEC=INFO
+            - CORE_PEER_ID=cli
+            - CORE_PEER_ADDRESS=peer1.org1.example.com:7051
+            - CORE_PEER_LOCALMSPID=Org1MSP
+            - CORE_PEER_TLS_ENABLED=true
+            - CORE_PEER_TLS_CERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.example.com/peers/peer1.org1.example.com/tls/server.crt
+            - CORE_PEER_TLS_KEY_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.example.com/peers/peer1.org1.example.com/tls/server.key
+            - CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.example.com/peers/peer1.org1.example.com/tls/ca.crt
+            - CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp
+        working_dir: /opt/gopath/src/github.com/hyperledger/fabric/peer
+        command: /bin/bash
+        volumes:
+            - /var/run/:/host/var/run/
+            - ./chaincode/:/opt/gopath/src/github.com/chaincode
+            - ./crypto-config:/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/
+            - ./scripts:/opt/gopath/src/github.com/hyperledger/fabric/peer/scripts/
+            - ./channel-artifacts:/opt/gopath/src/github.com/hyperledger/fabric/peer/channel-artifacts
+        depends_on:
+            - peer1.org1.example.com
+        networks:
+          - fabric
+
+
+    cli2:
+        container_name: cli2
+        image: hyperledger/fabric-tools
+        tty: true
+        stdin_open: true
+        environment:
+            - GOPATH=/opt/gopath
+            - CORE_VM_ENDPOINT=unix:///host/var/run/docker.sock
+            #- FABRIC_LOGGING_SPEC=DEBUG
+            - FABRIC_LOGGING_SPEC=INFO
+            - CORE_PEER_ID=cli
+            - CORE_PEER_ADDRESS=peer2.org1.example.com:7051
+            - CORE_PEER_LOCALMSPID=Org1MSP
+            - CORE_PEER_TLS_ENABLED=true
+            - CORE_PEER_TLS_CERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.example.com/peers/peer2.org1.example.com/tls/server.crt
+            - CORE_PEER_TLS_KEY_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.example.com/peers/peer2.org1.example.com/tls/server.key
+            - CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.example.com/peers/peer2.org1.example.com/tls/ca.crt
+            - CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp
+        working_dir: /opt/gopath/src/github.com/hyperledger/fabric/peer
+        command: /bin/bash
+        volumes:
+            - /var/run/:/host/var/run/
+            - ./chaincode/:/opt/gopath/src/github.com/chaincode
+            - ./crypto-config:/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/
+            - ./scripts:/opt/gopath/src/github.com/hyperledger/fabric/peer/scripts/
+            - ./channel-artifacts:/opt/gopath/src/github.com/hyperledger/fabric/peer/channel-artifacts
+        depends_on:
+            - peer2.org1.example.com
+        networks:
+          - fabric
