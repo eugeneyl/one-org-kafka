@@ -13,6 +13,9 @@ function json_ccp {
         -e "s/\${CAPORT}/$4/" \
         -e "s#\${PEERPEM}#$PP#" \
         -e "s#\${CAPEM}#$CP#" \
+        -e "s#\${NODE1}#$7#" \
+        -e "s#\${NODE2}#$8#" \
+        -e "s#\${NODE3}#$9#" \
         ccp-template.json 
 }
 
@@ -32,8 +35,8 @@ ORG=1
 P0PORT=7051
 P1PORT=7051
 CAPORT=7054
-PEERPEM=crypto-config/peerOrganizations/org1.frogfrogjump.com/tlsca/tlsca.org1.frogfrogjump.com-cert.pem
-CAPEM=crypto-config/peerOrganizations/org1.frogfrogjump.com/ca/ca.org1.frogfrogjump.com-cert.pem
+PEERPEM=crypto-config/peerOrganizations/org1.example.com/tlsca/tlsca.org1.example.com-cert.pem
+CAPEM=crypto-config/peerOrganizations/org1.example.com/ca/ca.org1.example.com-cert.pem
 
-echo "$(json_ccp $ORG $P0PORT $P1PORT $CAPORT $PEERPEM $CAPEM)" > connection-org1.json
+echo "$(json_ccp $ORG $P0PORT $P1PORT $CAPORT $PEERPEM $CAPEM $NODE1 $NODE2 $NODE3)" > connection-org1.json
 # echo "$(yaml_ccp $ORG $P0PORT $P1PORT $CAPORT $PEERPEM $CAPEM)" > connection-org1.yaml

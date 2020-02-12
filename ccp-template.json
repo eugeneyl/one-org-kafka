@@ -3,63 +3,84 @@
     "version": "1.0.0",
     "client": {
         "organization": "Org${ORG}",
+        "tlsEnable": true,
+		"adminUser": "admin",
+		"adminPassword": "adminpw",
+		"enableAuthentication": false,
         "connection": {
             "timeout": {
                 "peer": {
                     "endorser": "300"
-                }
+                },
+                "orderer": "300"
             }
         }
     },
+    "channels": {
+		"mychannel": {
+			"orderers": ["orderer0.example.com"],
+			"peers": {
+                "peer0.org1.example.com": {},
+                "peer1.org1.example.com": {},
+                "peer2.org1.example.com": {}
+			}
+		}
+	},
     "organizations": {
         "Org${ORG}": {
             "mspid": "Org${ORG}MSP",
+            "adminPrivateKey": {
+				"path": "/home/frog/one-org-kafka/crypto-config/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp/keystore/${ADMINKEY}"
+			},
+			"signedCert": {
+				"path": "/home/frog/one-org-kafka/crypto-config/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp/signcerts/Admin@org1.example.com-cert.pem"
+			},
             "peers": [
-                "peer0.org${ORG}.frogfrogjump.com",
-                "peer1.org${ORG}.frogfrogjump.com",
-                "peer2.org${ORG}.frogfrogjump.com"
+                "peer0.org${ORG}.example.com",
+                "peer1.org${ORG}.example.com",
+                "peer2.org${ORG}.example.com"
             ],
             "certificateAuthorities": [
-                "ca.org${ORG}.frogfrogjump.com"
+                "ca.org${ORG}.example.com"
             ]
         }
     },
     "peers": {
-        "peer0.org${ORG}.frogfrogjump.com": {
+        "peer0.org${ORG}.example.com": {
             "url": "grpcs://${NODE1}:${P0PORT}",
             "tlsCACerts": {
                 "pem": "${PEERPEM}"
             },
             "grpcOptions": {
-                "ssl-target-name-override": "peer0.org${ORG}.frogfrogjump.com",
-                "hostnameOverride": "peer0.org${ORG}.frogfrogjump.com"
+                "ssl-target-name-override": "peer0.org${ORG}.example.com",
+                "hostnameOverride": "peer0.org${ORG}.example.com"
             }
         },
-        "peer1.org${ORG}.frogfrogjump.com": {
+        "peer1.org${ORG}.example.com": {
             "url": "grpcs://${NODE1}:${P0PORT}",
             "tlsCACerts": {
                 "pem": "${PEERPEM}"
             },
             "grpcOptions": {
-                "ssl-target-name-override": "peer1.org${ORG}.frogfrogjump.com",
-                "hostnameOverride": "peer1.org${ORG}.frogfrogjump.com"
+                "ssl-target-name-override": "peer1.org${ORG}.example.com",
+                "hostnameOverride": "peer1.org${ORG}.example.com"
             }
         },
-        "peer2.org${ORG}.frogfrogjump.com": {
+        "peer2.org${ORG}.example.com": {
             "url": "grpcs://${NODE2}:${P0PORT}",
             "tlsCACerts": {
                 "pem": "${PEERPEM}"
             },
             "grpcOptions": {
-                "ssl-target-name-override": "peer2.org${ORG}.frogfrogjump.com",
-                "hostnameOverride": "peer2.org${ORG}.frogfrogjump.com"
+                "ssl-target-name-override": "peer2.org${ORG}.example.com",
+                "hostnameOverride": "peer2.org${ORG}.example.com"
             }
         }
     },
     "certificateAuthorities": {
-        "ca.org${ORG}.frogfrogjump.com": {
+        "ca.org${ORG}.example.com": {
             "url": "https://${NODE1}:${CAPORT}",
-            "caName": "ca.org${ORG}.frogfrogjump.com",
+            "caName": "ca.org${ORG}.example.com",
             "tlsCACerts": {
                 "pem": "${CAPEM}"
             },
